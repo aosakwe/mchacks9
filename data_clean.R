@@ -3,7 +3,7 @@ library(tidyverse)
 
 
 strsplit(raw[1,],split = " ")
-raw <- read.csv("data.csv")
+raw <- read.csv("data.csv", stringsAsFactors = TRUE)
 
 head(raw)
 
