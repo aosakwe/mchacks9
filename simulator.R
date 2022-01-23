@@ -1,24 +1,27 @@
 #Script to simulate train schedule
 
-#backups
-tmp2 <- stations
-tmp <- trains
-
-tmp3 <- stations
-tmp4 <- trains
-######
-stations <- tmp3
-trains <- tmp4
+#backups I use to be able to quickly rerun simulation
+tmp_stations <- stations
+tmp_trains <- trains
 
 
+###### Run simulation from here ######
+#Reset list objects
+stations <- tmp_stations
+trains <- tmp_trains
 
 
 ## Simulation
 #Going to iterate through every minute, and update the number of passengers
-start_times <- test$A_ArrivalTime
+#tweaked times based on when trains were always full in the simulation with
+#example schedule
+start_times <- c("7:00","7:10","7:15","7:23","7:27","7:37","7:47","7:57","8:07","8:20","8:30","8:45","9:10","9:30","9:40","10:00")
+#test$A_ArrivalTime <-- these are the start_times from the example schedule
+
 waiting_times <- c()
+
 for (i in times){
-  #Update passengers at station
+  #Update # of passengers at station
   if (i %in% traffic$Arrival_Time) {
     stations[["A"]][["Passengers"]] <- c(stations[["A"]][["Passengers"]],rep(i,traffic$Passengers[traffic$Arrival_Time == i & traffic$Station == "A"]))
     stations[["B"]][["Passengers"]] <- c(stations[["B"]][["Passengers"]],rep(i,traffic$Passengers[traffic$Arrival_Time == i & traffic$Station == "B"]))
@@ -118,24 +121,39 @@ for (i in times){
       }
       
     }
-    
+    #optim_eval[as.character(i),as.character(j)] <- trains[[j]]$max - trains[[j]]$Passengers
   }
-  
+  # optim_eval[as.character(i),"A"] <- length(stations[["A"]]$Passengers)
+  # optim_eval[as.character(i),"B"] <- length(stations[["B"]]$Passengers)
+  # optim_eval[as.character(i),"C"] <- length(stations[["C"]]$Passengers)
 }
+
+#Calculate avg waiting time and convert to minutes
 mean(waiting_times)*60
-write.csv(output,file = "results_output220122.csv",row.names = FALSE)
+# write.csv(output,file = "best_results_4m76_output220122.csv",row.names = FALSE)
+# ### SIMULATION CODE IS NOW COMPLETE. BELOW IS OPTIONAL ###
+# 
+# #Plot optim_eval values
+# convert_time <- strsplit(rownames(optim_eval),split = ":")
+# optim_eval$Time <- unlist(lapply(convert_time, function(a) as.numeric(a[[1]]) + as.numeric(a[[2]])/60)) 
+# backup <- optim_eval
+# optim_eval <- backup
+# optim_eval <- melt(optim_eval[,c(1:3,20)] ,  id.vars = 'Time', variable.name = 'series')
+# ggplot(optim_eval, aes(Time, value,color = series,group = 1)) +
+#   geom_line() 
 
 
 
-
-train_load <- c()
-for (train in trains){
-  train_load <- c(train_load,train$Passengers)
-}
-#total
-train_load - example$U_Offloading
-compare <- cbind(train_load,example$U_Offloading)
-compare <- cbind(compare,compare[,1] - compare[,2])
-colnames(compare) <- c("me","test","diff")
-view(output)
+# 
+# 
+# train_load <- c()
+# for (train in trains){
+#   train_load <- c(train_load,train$Passengers)
+# }
+# #total
+# train_load - example$U_Offloading
+# compare <- cbind(train_load,example$U_Offloading)
+# compare <- cbind(compare,compare[,1] - compare[,2])
+# colnames(compare) <- c("me","test","diff")
+# view(output)
 
