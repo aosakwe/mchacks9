@@ -1,8 +1,12 @@
 ## Script to Analyse Train data and generate data frames required to simulate
 #it
 library(ggplot2)
-library(tidyverse)
+library(stringr)
 library(reshape2)
+
+#running in RStudio
+dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+setwd(dir)
 
 #Data frame storing arrival times of passengers at Stations
 traffic <- read.csv("clean_data.csv")
@@ -12,9 +16,9 @@ traffic$Num_Arr_Time <- as.numeric(traffic$Num_Arr_Time)
 
 #Distribution of Passengers Arrivals at each station over time
 explore <- ggplot(data = traffic, aes(x = Num_Arr_Time, y = Passengers, color = Station)) + geom_line() + labs(title = "Distribution of Passenger Arrivals over time", x = "Arrival Time", y = "Number of Passengers")
-png(filename = "passenger_plot.png")
+# png(filename = "passenger_plot.png")
 print(explore)
-dev.off()
+# dev.off()
 
 # We have two traits to change in our schedule:
 # 1) the order of our trains (and therefore the capacity)
@@ -153,5 +157,6 @@ calc_wait <- function(new_boarded, cur_time){
   return(new_boarded)
 }
 #################
+
 
 

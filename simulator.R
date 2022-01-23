@@ -1,4 +1,13 @@
 #Script to simulate train schedule
+library(ggplot2)
+library(stringr)
+library(reshape2)
+
+#running in RStudio
+dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+setwd(dir)
+
+
 
 #backups I use to be able to quickly rerun simulation
 tmp_stations <- stations
