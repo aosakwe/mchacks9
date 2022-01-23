@@ -101,7 +101,7 @@ for (i in times){
             stations[[trains[[j]]$cur_station]]$cur_train = TRUE
             trains[[j]]$arriv_times <- c(trains[[j]]$arriv_times,i)
             if (trains[[j]]$cur_station == "U"){
-              output$U_ArrivalTime[j] <- i
+              output$U_Arrival[j] <- i
               output$U_AvailCap[j] <- trains[[j]]$max - trains[[j]]$Passengers
               output$U_Offloading[j] <- trains[[j]]$Passengers
               trains[[j]]$arrived = TRUE
@@ -123,6 +123,7 @@ for (i in times){
   
 }
 mean(waiting_times)*60
+write.csv(output,file = "results_output220122.csv",row.names = FALSE)
 
 
 
