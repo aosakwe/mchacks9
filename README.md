@@ -5,7 +5,7 @@ Mchacks 9 Project Repository for RailVision Train Schedule Optimization Project
 ### Requirements To Run Simulation in RStudio:
 Files: clean_data.csv,example_out.txt,colname.txt,simulation_prep.R,simulator.R
 
-R packages: tidyverse (for everything), reshape2 (for animation, still in progress)
+R packages: tidyverse (for everything), reshape2 (for visuals)
 
 ![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
 
