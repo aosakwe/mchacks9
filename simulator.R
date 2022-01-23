@@ -1,6 +1,5 @@
 #Script to simulate train schedule
-library(ggplot2)
-library(stringr)
+library(tidyverse)
 library(reshape2)
 
 #running in RStudio
