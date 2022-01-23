@@ -35,7 +35,8 @@ for (i in times){
     if (i %in% start_times & !trains[[j]]$on_track){
       start_times <- start_times[-1]
       trains[[j]]$arriv_times <- c(trains[[j]]$arriv_times,i)
-      
+      output$A_ArrivalTime[j] <- i
+      output$A_AvailCap[j] <- trains[[j]]$max
       trains[[j]]$on_track <- TRUE
       trains[[j]]$stop_time <- 3
       
@@ -70,19 +71,39 @@ for (i in times){
           #Reduce stop time and if 0 move
           trains[[j]]$stop_time = trains[[j]]$stop_time - 1
           if (trains[[j]]$stop_time == 0){
+            
+            if (trains[[j]]$cur_station == "B"){
+              output$B_Boarding[j] <- output$B_AvailCap[j] - (trains[[j]]$max - trains[[j]]$Passengers)
+            }else if (trains[[j]]$cur_station == "C"){
+              output$C_Boarding[j] <- output$C_AvailCap[j] - (trains[[j]]$max - trains[[j]]$Passengers)
+            }else if (trains[[j]]$cur_station == "A"){
+              output$A_Boarding[j]  <- output$A_AvailCap[j] - (trains[[j]]$max - trains[[j]]$Passengers)
+            }
+            
             trains[[j]]$time_to_next <- dist[trains[[j]]$cur_station,1]
             trains[[j]]$next_station <- dist[trains[[j]]$cur_station,2]
             trains[[j]]$cur_station <- "N"
             stations[[trains[[j]]$cur_station]]$cur_train = FALSE
+            
           }
         }else{
           trains[[j]]$time_to_next = trains[[j]]$time_to_next - 1
           if (trains[[j]]$time_to_next == 0){
-            trains[[j]]$cur_station = trains[[j]]$next_station
-            trains[[j]]$stop_time = 3
+            trains[[j]]$cur_station <- trains[[j]]$next_station
+            if (trains[[j]]$cur_station == "B"){
+              output$B_ArrivalTime[j] <- i
+              output$B_AvailCap[j] <- trains[[j]]$max - trains[[j]]$Passengers
+            }else if (trains[[j]]$cur_station == "C"){
+              output$C_ArrivalTime[j] <- i
+              output$C_AvailCap[j] <- trains[[j]]$max - trains[[j]]$Passengers
+            }
+            trains[[j]]$stop_time <- 3
             stations[[trains[[j]]$cur_station]]$cur_train = TRUE
             trains[[j]]$arriv_times <- c(trains[[j]]$arriv_times,i)
             if (trains[[j]]$cur_station == "U"){
+              output$U_ArrivalTime[j] <- i
+              output$U_AvailCap[j] <- trains[[j]]$max - trains[[j]]$Passengers
+              output$U_Offloading[j] <- trains[[j]]$Passengers
               trains[[j]]$arrived = TRUE
               next
             }
@@ -103,11 +124,11 @@ for (i in times){
 }
 mean(waiting_times)*60
 
-total <- 0
+
+
+
 train_load <- c()
 for (train in trains){
-  #total <- total + train$Passengers
-  #print(train$Passengers)
   train_load <- c(train_load,train$Passengers)
 }
 #total
@@ -115,4 +136,5 @@ train_load - example$U_Offloading
 compare <- cbind(train_load,example$U_Offloading)
 compare <- cbind(compare,compare[,1] - compare[,2])
 colnames(compare) <- c("me","test","diff")
-fix(output)
+view(output)
+

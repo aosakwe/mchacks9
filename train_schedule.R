@@ -24,21 +24,16 @@ explore
 # distribution,and then adjust the frequency/schedule to best accommodate the
 # traffic.
 
-train_size <- c(rep(400,times = 12),rep(200,times = 4))
+train_size <- c(200,rep(400,times = 12),rep(200,times = 3))
 trains <- ifelse(train_size == 200, "L4","L8")
 output <- data.frame(matrix(data = NA, nrow = 16, ncol = 14))
 colnames(output) <- read.table("colname.txt", sep = "\n")[,1]
 output$TrainNum <- seq(1:16)
-output$TrainType <- as.factor(trains)
+output$TrainType <- trains
 fix(output)
 
-##Checking if my simulation works and generates the expected output
+##Will check if my simulation works with the example schedule
 example <- read.table("example_out.txt",header = TRUE)
-#store copy of output to test algorithm on
-test <- output
-test$A_ArrivalTime <- example$A_ArrivalTime
-convert_time <-strsplit(example$A_ArrivalTime,split = ":")
-#test$A_ArrivalTime <- unlist(lapply(convert_time, function(a) as.numeric(a[[1]]) + as.numeric(a[[2]])/60))
 
 
 
