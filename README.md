@@ -7,9 +7,13 @@ Files: clean_data.csv,example_out.txt,colname.txt,simulation_prep.R,simulator.R
 
 R packages: tidyverse (for everything), reshape2 (for animation, still in progress)
 
-![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/SBB_DIO.png)
+![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
 
 
 
+## Visuals
+### Passenger Arrivals
+![Plot of Passenger Arrivals](https://github.com/aosakwe/mchacks9/blob/main/visuals/passenger_plot.png)
 
-![Plot of Passenger Arrivals](https://github.com/aosakwe/mchacks9/blob/main/passenger_plot.png)
+### Boarding Efficiency
+![Plot of Boarding Efficiency](https://github.com/aosakwe/mchacks9/blob/main/visuals/Visualization.png)
