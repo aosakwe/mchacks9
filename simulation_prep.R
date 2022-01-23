@@ -1,7 +1,6 @@
 ## Script to Analyse Train data and generate data frames required to simulate
 #it
-library(ggplot2)
-library(stringr)
+library(tidyverse)
 library(reshape2)
 
 #running in RStudio
