@@ -1,17 +1,25 @@
-#Generating Formatted CSV file
+#Generating Formatted CSV file to use in analysis
 library(tidyverse)
 
 
-strsplit(raw[1,],split = " ")
-raw <- read.csv("data.csv", stringsAsFactors = TRUE)
-
+raw <- read.csv("data.csv")
 head(raw)
 
-out <- data.frame(matrix(data = NA, ncol = 3,nrow = 171/3))
+out <- data.frame(matrix(data = NA, ncol = 4,nrow = 171/3))
 out$X1 <- raw[seq(1,nrow(raw),by=3),]
 out$X2 <- raw[seq(2,nrow(raw),by=3),]
 out$X3 <- raw[seq(3,nrow(raw),by=3),]
+
+#Converting time to a decimal value to facilitate manipulation later on
+times <- strsplit(out[,2],split = ":")
+out$X4 <-  unlist(lapply(times, function(a) as.numeric(strsplit(a,split = ":")[[1]]) + as.numeric(strsplit(a,split = ":")[[2]])/60))
+
+
 head(out)
-colnames(out) <- c("Station","Arrival Time", "# Passengers")
+colnames(out) <- c("Station","Arrival_Time", "Passengers","Num_Arr_Time")
 
 write.csv(out,file = "clean_data.csv",row.names = FALSE)
+
+
+
+
