@@ -1,16 +1,22 @@
-#reeducing trains
+#Script to simulate train schedule
+
+#backups
 tmp2 <- stations
 tmp <- trains
 
+tmp3 <- stations
+tmp4 <- trains
 ######
-stations <- tmp2
-trains <- tmp
+stations <- tmp3
+trains <- tmp4
 
 
-start_times <- test$A_ArrivalTime
+
 
 ## Simulation
 #Going to iterate through every minute, and update the number of passengers
+start_times <- test$A_ArrivalTime
+waiting_times <- c()
 for (i in times){
   #Update passengers at station
   if (i %in% traffic$Arrival_Time) {
@@ -36,9 +42,12 @@ for (i in times){
       
       stations[["A"]]$cur_train <- TRUE
       trains[[j]]$cur_station <- "A"
+      
       out <- embark(trains[[j]],stations[["A"]])
       trains[[j]]$Passengers <- unlist(out[[1]])
       stations[["A"]]$Passengers <- unlist(out[[2]])
+      empty <- is.null(unlist(out[[3]]))
+      if (!empty){waiting_times <- c(waiting_times,calc_wait(unlist(out[[3]]),i))}
     }
     else if(!trains[[j]]$on_track){next
     }else{
@@ -52,9 +61,11 @@ for (i in times){
           #Fill em up first
           
           out <- embark(trains[[j]],stations[[trains[[j]]$cur_station]])
-        
           trains[[j]]$Passengers <- unlist(out[[1]])
           stations[[trains[[j]]$cur_station]]$Passengers <- unlist(out[[2]])
+          empty <- is.null(unlist(out[[3]]))
+          if (!empty){waiting_times <- c(waiting_times,calc_wait(unlist(out[[3]]),i))}
+          
           ###
           #Reduce stop time and if 0 move
           trains[[j]]$stop_time = trains[[j]]$stop_time - 1
@@ -79,6 +90,8 @@ for (i in times){
             out <- embark(trains[[j]],stations[[trains[[j]]$cur_station]])
             trains[[j]]$Passengers <- unlist(out[[1]])
             stations[[trains[[j]]$cur_station]]$Passengers <- unlist(out[[2]])
+            empty <- is.null(unlist(out[[3]]))
+            if (!empty){waiting_times <- c(waiting_times,calc_wait(unlist(out[[3]]),i))}
           }
         }
       }
@@ -88,5 +101,18 @@ for (i in times){
   }
   
 }
+mean(waiting_times)*60
 
-
+total <- 0
+train_load <- c()
+for (train in trains){
+  #total <- total + train$Passengers
+  #print(train$Passengers)
+  train_load <- c(train_load,train$Passengers)
+}
+#total
+train_load - example$U_Offloading
+compare <- cbind(train_load,example$U_Offloading)
+compare <- cbind(compare,compare[,1] - compare[,2])
+colnames(compare) <- c("me","test","diff")
+fix(output)

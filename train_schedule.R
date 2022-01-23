@@ -42,9 +42,11 @@ convert_time <-strsplit(example$A_ArrivalTime,split = ":")
 
 
 
+ ##### Helper Functions ###########
+
 #Embark function
 
-embark <- function(train,train_stop){
+old_embark <- function(train,train_stop){
   #remaining seats on train
   remain <- train$max - length(train$Passengers)
   if (remain == 0){
@@ -60,9 +62,41 @@ embark <- function(train,train_stop){
   return(list(new_boarded,new_waiting))
 }
 
+#New embark
+#only store total number of passengers on train
+embark <- function(train,train_stop){
+  #remaining seats on train
+  remain <- train$max - train$Passengers
+  if (remain == 0){
+    return(list(train$Passengers,train_stop$Passengers,c()))
+  }
+  if (remain > length(train_stop$Passengers)){
+    on_board <- train$Passengers + length(train_stop$Passengers)
+    new_boarded <- train_stop$Passengers
+    new_waiting <- c()
+  }else {
+    on_board <- train$Passengers + length(train_stop$Passengers[1:remain])
+    new_boarded <- train_stop$Passengers[1:remain]
+    new_waiting <- train_stop$Passengers[-c(1:(remain))]
+  }
+  return(list(on_board,new_waiting,new_boarded))
+}
 
 
+#Calculate the wait times 
+calc_wait <- function(new_boarded, cur_time){
+  convert_time <-strsplit(new_boarded,split = ":")
+  new_boarded <- unlist(lapply(convert_time, function(a) as.numeric(a[[1]]) + as.numeric(a[[2]])/60))
+  convert_cur <- unlist(strsplit(cur_time,split = ":"))
+  
+  cur_time <- as.numeric(convert_cur[1]) + as.numeric(convert_cur[2])/60
+  new_boarded <- cur_time - new_boarded
+  return(new_boarded)
+}
+#################
 
+
+###### Generating Objects  ########
 
 #list Object to store stations
 station <- list(Passengers = c(), cur_train = FALSE)
@@ -73,8 +107,12 @@ for (name in  names(stations)){
 
 
 #list of train list objects
-l4_train <- list(Passengers = c(),cur_station = "N", time_to_next = 0,max = 200,stop_time = 0,next_station= "N", on_track = FALSE,arrived = FALSE,arriv_times = c())
-l8_train <- list(Passengers = c(),cur_station = "N", time_to_next = 0,max = 400,stop_time = 0,next_station= "N",on_track = FALSE,arrived = FALSE,arriv_times = c())
+#old_l4_train <- list(Passengers = c(),cur_station = "N", time_to_next = 0,max = 200,stop_time = 0,next_station= "N", on_track = FALSE,arrived = FALSE,arriv_times = c())
+#old_l8_train <- list(Passengers = c(),cur_station = "N", time_to_next = 0,max = 400,stop_time = 0,next_station= "N",on_track = FALSE,arrived = FALSE,arriv_times = c())
+
+l4_train <- list(Passengers = 0,cur_station = "N", time_to_next = 0,max = 200,stop_time = 0,next_station= "N", on_track = FALSE,arrived = FALSE,arriv_times = c())
+l8_train <- list(Passengers = 0,cur_station = "N", time_to_next = 0,max = 400,stop_time = 0,next_station= "N",on_track = FALSE,arrived = FALSE,arriv_times = c())
+
 trains <- vector(mode = "list", length = 16)
 for (i in 1:length(trains)){
   if (i == 1){trains[[i]] <- l4_train}
@@ -88,6 +126,7 @@ times <- as.character(times)
 times[str_length(times) == 1] <- str_c("0",times[str_length(times) == 1])
 times <- c(str_c("7:",times,sep = ""),str_c("8:",times,sep = ""),str_c("9:",times,sep = ""),str_c("10:",times,sep = ""))
 times <- as.factor(times)
+
 
 
 #Itinerary matrix
