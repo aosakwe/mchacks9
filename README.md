@@ -3,9 +3,10 @@ Mchacks 9 Project Repository for RailVision Train Schedule Optimization Project
 ## Current best average wait time: *4.76 minutes*
 
 ### Requirements To Run Simulation in RStudio:
-Files: clean_data.csv,example_out.txt,colname.txt,simulation_prep.R,simulator.R
+To try this out you can download the repository and open the "mchacks.Rproj" file to open the project. You can then modi    fy the schedules.csv file in Input to run the simulation on schedules you make with a given order of trains.
 
-R packages: tidyverse (for everything), reshape2 (for visuals)
+R packages: tidyverse, reshape2 
+
 
 ![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
 
@@ -16,4 +17,7 @@ R packages: tidyverse (for everything), reshape2 (for visuals)
 ![Plot of Passenger Arrivals](https://github.com/aosakwe/mchacks9/blob/main/visuals/passenger_plot.png)
 
 ### Boarding Efficiency
-![Plot of Boarding Efficiency](https://github.com/aosakwe/mchacks9/blob/main/visuals/Visualization.png)
+![Plot of Boarding Efficiency](https://github.com/aosakwe/mchacks9/blob/main/visuals/best_result_plot26Jan2022.png)
+
+
+
