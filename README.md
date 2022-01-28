@@ -7,7 +7,7 @@ Will merge this branch with main once it is complete.
 ![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
 
 ## Sample of Dashboard:
-![Sample of Dashboard](https://github.com/aosakwe/mchacks9/blob/main/visuals/sample_dashboard.png)
+![Sample of Dashboard](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/sample_dashboard.png)
 
 ## Visuals
 ### Passenger Arrivals
