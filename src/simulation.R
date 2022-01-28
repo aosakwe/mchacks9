@@ -1,6 +1,12 @@
 #This is the main script for the schedule simulator
 ##It will run the simulator() method on every proposed  schedule and train order
 ##It then prints out the results file for the schedule with the lowest mean waiting time
+## This script is dependent on simulation_prep.R AND simulator.R
+
+source("./src/simulation_prep.R")
+source("./src/simulator.R")
+
+
 
 #Store column name of each set of schedule times
 #Use this to run simulator() on each schedule
