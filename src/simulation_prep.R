@@ -30,7 +30,7 @@ Output <- data.frame(matrix(data = NA, nrow = 16, ncol = 14))
 colnames(Output) <- read.table("./Input/colname.txt", sep = "\n")[,1]
 Output$TrainNum <- seq(1:16)
 Output$TrainType <- train_order
-fix(Output)
+#fix(Output)
 
 
 
