@@ -146,7 +146,7 @@ simulator <- function(start_times,trains,stations,output,optim_eval){
   simu_eval <- ggplot(optim_eval, aes(Time,value,group = series,color = series)) + 
     geom_line(data = optim_eval[!is.na(optim_eval$value),]) + geom_point(shape = 17) + 
     geom_line(data = train_eval[!is.na(train_eval$value),],aes(color = series,group = series)) +
-    geom_text(data = train_eval,aes(label = series)) + labs(title = "Train Boarding Efficiency",y = "# of Passengers") + xlim(7,10.75)
+    geom_text(data = train_eval,aes(label = series)) + labs(title = "Train Boarding Efficiency",y = "# of Passengers",subtitle = paste("Average wait time: ",round(avg_wait,2)," minutes",sep = '')) + xlim(7,10.75)
   
   
   ## Output list
