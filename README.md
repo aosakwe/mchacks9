@@ -9,6 +9,7 @@ Using this help me find a bottleneck at train 11 --> best average dropped from 4
 ![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
 
 ## Sample of Dashboard:
+<<<<<<< HEAD
 ### App Homepage
 ![Homepage](https://github.com/aosakwe/mchacks9/blob/main/visuals/sample_dash1.png)
 
@@ -16,6 +17,9 @@ Using this help me find a bottleneck at train 11 --> best average dropped from 4
 ![Plots](https://github.com/aosakwe/mchacks9/blob/main/visuals/sample_dash2.png)
 
 
+=======
+![Sample of Dashboard](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/sample_dashboard.png)
+>>>>>>> 4130cec39e0b52cc5844fae335788f1817640178
 
 ## Visuals
 ### Passenger Arrivals
