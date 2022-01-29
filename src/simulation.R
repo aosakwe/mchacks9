@@ -10,8 +10,11 @@ Start_times <- colnames(input)
 simu_results <- lapply(Start_times, function(a) 
   simulator(start_times = input[,a],trains = Trains, stations = Stations,output = Output,optim_eval = Optim_eval))
 
-#wait_times <- unlist(lapply(simu_results, function(a) a[[1]]))
-#best_sim <- simu_results[[which.min(wait_times)]]
+
+#Storing some summary stats to show on the dashboard
+wait_times <- unlist(lapply(simu_results, function(a) a[[1]]))
+best_sim <- simu_results[[which.min(wait_times)]]
+worst_sim <- simu_results[[which.max(wait_times)]]
 #fileID <- paste(unlist(strsplit(date(), " "))[c(3,2,5)],collapse = '')
 
 

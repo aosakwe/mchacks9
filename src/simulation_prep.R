@@ -16,7 +16,7 @@ traffic$Num_Arr_Time <- as.numeric(traffic$Num_Arr_Time)
 #Distribution of Passengers Arrivals at each station over time
 explore <- ggplot(data = traffic, aes(x = Num_Arr_Time, y = Passengers, color = Station)) + geom_line() + labs(title = "Distribution of Passenger Arrivals over time", x = "Arrival Time", y = "Number of Passengers")
 #png(filename = "passenger_plot.png")
-print(explore)
+#print(explore)
 #dev.off()
 
 #Loading train order and set of possible schedules

@@ -1,14 +1,6 @@
 #Script for the simulator() function
 #This function takes as input the order of trains, their departure times, and the "trains" and "stations" list objects
 #It then returns a 3 object list composed of the mean waiting time (1), the results table (2) and the boarding efficiency plot (3)
-library(tidyverse)
-library(reshape2)
-
-
-#backups I use to be able to quickly rerun simulation
-tmp_stations <- Stations
-tmp_trains <- Trains
-
 
 
 
@@ -142,8 +134,7 @@ simulator <- function(start_times,trains,stations,output,optim_eval){
   optim_eval <- backup
   train_eval <- melt(optim_eval[,c(4:20)],id.vars = 'Time',variable.name = 'series')
   optim_eval <- melt(optim_eval[,c(1:3,20)],id.vars = 'Time',variable.name = 'series')
-  
-  simu_eval <- ggplot(optim_eval, aes(Time,value,group = series,color = series)) + 
+  simu_eval <- ggplot(optim_eval, aes(Time,value,group = series, color = series)) +
     geom_line(data = optim_eval[!is.na(optim_eval$value),]) + geom_point(shape = 17) + 
     geom_line(data = train_eval[!is.na(train_eval$value),],aes(color = series,group = series)) +
     geom_text(data = train_eval,aes(label = series)) + labs(title = "Train Boarding Efficiency",y = "# of Passengers",subtitle = paste("Average wait time: ",round(avg_wait,2)," minutes",sep = '')) + xlim(7,10.75)
