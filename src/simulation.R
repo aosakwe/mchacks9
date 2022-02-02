@@ -16,15 +16,17 @@ Start_times <- colnames(input)
 simu_results <- lapply(Start_times, function(a) 
   simulator(start_times = input[,a],trains = Trains, stations = Stations,output = Output,optim_eval = Optim_eval))
 
+
+#Storing some summary stats to show on the dashboard
 wait_times <- unlist(lapply(simu_results, function(a) a[[1]]))
 best_sim <- simu_results[[which.min(wait_times)]]
-fileID <- paste(unlist(strsplit(date(), " "))[c(3,2,5)],collapse = '')
+worst_sim <- simu_results[[which.max(wait_times)]]
+#fileID <- paste(unlist(strsplit(date(), " "))[c(3,2,5)],collapse = '')
 
 
 #Store best_sim outputs in results and visuals directory
-write.csv(best_sim[[2]],file =  paste("./results/best_result_table",fileID,".csv",sep = ''),row.names = FALSE)
+#write.csv(best_sim[[2]],file =  paste("./results/best_result_table",fileID,".csv",sep = ''),row.names = FALSE)
 
-png(filename = paste("./visuals/best_result_plot",fileID,".png",sep = ''))
-print(best_sim[[3]] +
-        labs(subtitle = paste("Average wait time: ",round(best_sim[[1]],2)," minutes",sep = '')))
-dev.off()
+#png(filename = paste("./visuals/best_result_plot",fileID,".png",sep = ''))
+#print(best_sim[[3]])
+#dev.off()

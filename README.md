@@ -1,23 +1,26 @@
-# mchacks9
-Mchacks 9 Project Repository for RailVision Train Schedule Optimization Project
-## Current best average wait time: *4.76 minutes*
+# mchacks9  Shiny Branch
 
-### Requirements To Run Simulation in RStudio:
-To try this out you can download the repository and open the "mchacks.Rproj" file to open the project. You can then modi    fy the schedules.csv file in Input to run the simulation on schedules you make with a given order of trains.
+### In Progress!!
+Working on developing a Shiny Dashboard to visualize all the simulation results in an interactive GUI.
+Will merge this branch with main once it is complete. 
 
-R packages: tidyverse, reshape2 
+Using this helped me find a bottleneck at train 11 --> best average wait time dropped from 4.76 to 4.04 minutes
 
+![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/SBB_DIO.png)
 
-![Dio v. SBB](https://github.com/aosakwe/mchacks9/blob/main/visuals/SBB_DIO.png)
+## Sample of Dashboard:
+### App Homepage
+![Homepage](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/sample_dash1.png)
 
-
+### Plot Section
+![Plots](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/sample_dash2.png)
 
 ## Visuals
 ### Passenger Arrivals
-![Plot of Passenger Arrivals](https://github.com/aosakwe/mchacks9/blob/main/visuals/passenger_plot.png)
+![Plot of Passenger Arrivals](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/passenger_plot.png)
 
 ### Boarding Efficiency
-![Plot of Boarding Efficiency](https://github.com/aosakwe/mchacks9/blob/main/visuals/best_result_plot26Jan2022.png)
+![Plot of Boarding Efficiency](https://github.com/aosakwe/mchacks9/blob/shiny/visuals/best_result_plot26Jan2022.png)
 
 
 
